@@ -58,3 +58,51 @@ f3 <- factor(letters, levels = rev(letters))
 l <- list(1,2,c(3,4))
 
 
+# Data frames and tibbles -------------------------------------------------
+
+df1 <- data.frame(x = 1:3, y = letters[1:3])
+
+typeof(df1)
+attributes(df1)
+
+library(tibble)
+
+df2 <- tibble(x = 1:3, y = letters[1:3])
+
+typeof(df2)
+
+attributes(df2)
+
+
+dfm <- data.frame(
+  x = 1:3 * 10
+)
+dfm$y <- matrix(1:9, nrow = 3)
+dfm$z <- data.frame(a = 3:1, b = letters[1:3], stringsAsFactors = FALSE)
+
+str(dfm)
+
+## Can you have a data frame with zero rows? What about zero columns?
+
+df3 <- data.frame()
+
+## What happens if you attempt to set rownames that are not unique?
+
+df4 <- data.frame(x = 1:3, row.names = c('a','a','b'))
+
+## If df is a data frame, what can you say about t(df), and t(t(df))?
+## Perform some experiments, making sure to try different column types.
+
+df5 <- data.frame(a = 3:1, b = letters[1:3], stringsAsFactors = FALSE)
+df5 <- data.frame(a = 3:1, b = 1:3)
+t(df5)
+t(t(df5))
+typeof(t(t(df5)))
+
+## What does as.matrix() do when applied to a data frame with columns of different types?
+## How does it differ from data.matrix()?
+
+as.matrix(df5)
+data.matrix(df5)
+
+
