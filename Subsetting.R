@@ -84,4 +84,37 @@ df[is.na(df)] <- 0
 
 # Selecting a single element ----------------------------------------------
 
+x <- list(
+  a = list(1, 2, 3),
+  b = list(3, 4, 5)
+)
+
+purrr::pluck(x, "a", 1)
+
+purrr::pluck(x, "c", 1)
+
+purrr::pluck(x, "c", 1, .default = NA)
+
+## Brainstorm as many ways as possible to extract the third value from the cyl variable in the mtcars dataset.
+
+mtcars$cyl[3]
+mtcars$cyl[[3]]
+mtcars[['cyl']][3]
+mtcars[['cyl']][[3]]
+mtcars[[2]][[3]]
+mtcars[[c(2,3)]]
+mtcars[3,2]
+
+## Given a linear model, e.g., mod <- lm(mpg ~ wt, data = mtcars), extract the residual degrees of freedom.
+## Then extract the R squared from the model summary (summary(mod))
+
+mod <- lm(mpg ~ wt, data = mtcars)
+
+mod$df.residual
+
+summary(mod)$r.squared
+
+
+# Subsetting and assignment -----------------------------------------------
+
 
