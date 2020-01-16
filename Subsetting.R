@@ -117,4 +117,48 @@ summary(mod)$r.squared
 
 # Subsetting and assignment -----------------------------------------------
 
+x <- list(a = 1, b = 2)
+x[["b"]] <- NULL
+str(x)
 
+y <- list(a = 1, b = 2)
+y["b"] <- list(NULL)
+str(y)
+
+
+# Applications ------------------------------------------------------------
+
+x <- c("m", "f", "u", "f", "f", "m", "m")
+lookup <- c(m = "Male", f = "Female", u = NA)
+lookup[x]
+
+unname(lookup[x])
+
+grades <- c(1, 2, 2, 3, 1)
+
+info <- data.frame(
+  grade = 3:1,
+  desc = c("Excellent", "Good", "Poor"),
+  fail = c(F, F, T)
+)
+
+id <- match(grades, info$grade)
+info[id, ]
+
+df <- data.frame(x = c(2, 4, 1), y = c(9, 11, 6), n = c(3, 5, 1))
+rep(1:nrow(df), df$n)
+
+df[rep(1:nrow(df), df$n), ]
+
+## How would you randomly permute the columns of a data frame? (This is an important technique in random forests.)
+## Can you simultaneously permute the rows and columns in one step?
+
+mtcars[sample(nrow(mtcars)),sample(names(mtcars))]
+
+## How would you select a random sample of m rows from a data frame? What if the sample had to be contiguous
+## (i.e., with an initial row, a final row, and every row in between)?
+m <- 3
+mtcars[seq(sample(nrow(mtcars)-m+1,1),length.out = m),]
+
+## How could you put the columns in a data frame in alphabetical order?
+mtcars[order(names(mtcars))]
