@@ -160,3 +160,46 @@ mean(1, 2, 3, na.omit = TRUE)
 
 plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 
+
+# Exiting a function ------------------------------------------------------
+
+cleanup <- function(dir, code) {
+  old_dir <- setwd(dir)
+  on.exit(setwd(old_dir), add = TRUE)
+  
+  old_opt <- options(stringsAsFactors = FALSE)
+  on.exit(options(old_opt), add = TRUE)
+}
+
+## What does load() return? Why don’t you normally see these values?
+?load
+load(mtcars)
+
+capture.output2 <- function(code) {
+  temp <- tempfile()
+  on.exit(file.remove(temp), add = TRUE, after = TRUE)
+  
+  sink(temp)
+  on.exit(sink(), add = TRUE, after = TRUE)
+  
+  force(code)
+  readLines(temp)
+}
+x <- capture.output2(cat("a", "b", "c", sep = "\n"))
+y <- capture.output(cat("a", "b", "c", sep = "\n"))
+
+
+# Function forms ----------------------------------------------------------
+
+`<-`(x,2)
+
+x + y
+`+`(x, y)
+
+names(df) <- c("x", "y", "z")
+`names<-`(df, c("x", "y", "z"))
+
+for(i in 1:10) print(i)
+`for`(i, 1:10, print(i))
+
+
