@@ -1,0 +1,6 @@
+library(rlang)
+
+
+# Signalling conditions ---------------------------------------------------
+
+

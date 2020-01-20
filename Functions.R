@@ -202,4 +202,10 @@ names(df) <- c("x", "y", "z")
 for(i in 1:10) print(i)
 `for`(i, 1:10, print(i))
 
+## Rewrite the following code snippets into prefix form:
+1 %>% 
+  `+`(2) %>% 
+  `+`(3)
+
+
 
