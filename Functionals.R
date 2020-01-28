@@ -128,3 +128,25 @@ nm <- names(trans)
 mtcars[nm] <- map2(trans, mtcars[nm], function(f, var) f(var))
 
 mtcars[vars] <- map(vars, ~ trans[[.x]](mtcars[[.x]]))
+
+
+# Reduce family -----------------------------------------------------------
+
+reduce(1:100,sum, .init = 0)
+
+l <- map(1:4, ~ sample(1:10, 15, replace = T))
+
+reduce(l,intersect)
+accumulate(l, intersect)
+
+
+# Predicate functionals ---------------------------------------------------
+
+df <- data.frame(x = 1:3, y = c("a", "b", "c"))
+detect(df, is.factor)
+
+detect_index(df, is.factor)
+
+str(keep(df, is.factor))
+
+str(discard(df, is.factor))
