@@ -150,3 +150,7 @@ detect_index(df, is.factor)
 str(keep(df, is.factor))
 
 str(discard(df, is.factor))
+
+## Why isn’t is.na() a predicate function? What base R function is closest to being a predicate version of is.na()
+
+is.na(c(1,2,NA))
