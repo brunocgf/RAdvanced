@@ -66,3 +66,57 @@ new_counter3 <- function() {
     i
   }
 }
+
+
+# Graphical factories -----------------------------------------------------
+
+y <- c(12345, 123456, 1234567)
+comma_format()(y)
+
+number_format(scale = 1e-3, suffix = " K")(y)
+
+df <- data.frame(x = 1, y = y)
+core <- ggplot(df, aes(x, y)) + 
+  geom_point() + 
+  scale_x_continuous(breaks = 1, labels = NULL) +
+  labs(x = NULL, y = NULL)
+
+core
+core + scale_y_continuous(
+  labels = comma_format()
+)
+core + scale_y_continuous(
+  labels = number_format(scale = 1e-3, suffix = " K")
+)
+core + scale_y_continuous(
+  labels = scientific_format()
+)
+
+# construct some sample data with very different numbers in each cell
+sd <- c(1, 5, 157)
+n <- 100
+
+df <- data.frame(x = rnorm(3 * n, sd = sd), sd = rep(sd, n))
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = 2) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+
+binwidth_bins <- function(n) {
+  force(n)
+  
+  function(x) {
+    (max(x) - min(x)) / n
+  }
+}
+
+ggplot(df, aes(x)) + 
+  geom_histogram(binwidth = binwidth_bins(20)) + 
+  facet_wrap(~ sd, scales = "free_x") + 
+  labs(x = NULL)
+
+## Compare and contrast ggplot2::label_bquote() with scales::number_format()
+
+?label_bquote
+?facet_grid
