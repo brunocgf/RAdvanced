@@ -120,3 +120,46 @@ ggplot(df, aes(x)) +
 
 ?label_bquote
 ?facet_grid
+
+
+# Statistical factories ---------------------------------------------------
+
+boxcox2 <- function(lambda) {
+  if (lambda == 0) {
+    function(x) log(x)
+  } else {
+    function(x) (x ^ lambda - 1) / lambda
+  }
+}
+
+stat_boxcox <- function(lambda) {
+  stat_function(aes(colour = lambda), fun = boxcox2(lambda), size = 1)
+}
+
+ggplot(data.frame(x = c(0, 5)), aes(x)) + 
+  lapply(c(0.5, 1, 1.5), stat_boxcox) + 
+  scale_colour_viridis_c(limits = c(0, 1.5))
+
+
+# Function factories + functionals ----------------------------------------
+
+## Which of the following commands is equivalent to with(x, f(z))?
+
+x$f(z)
+
+## Compare and contrast the effects of env_bind() vs. attach() for the following code.
+
+funs <- list(
+  mean = function(x) mean(x, na.rm = TRUE),
+  sum = function(x) sum(x, na.rm = TRUE)
+)
+
+attach(funs)
+
+mean <- function(x) stop("Hi!")
+detach(funs)
+
+env_bind(globalenv(), !!!funs)
+mean <- function(x) stop("Hi!") 
+env_unbind(globalenv(), names(funs))
+mean
