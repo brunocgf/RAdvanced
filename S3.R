@@ -31,3 +31,11 @@ ftype(x)
 unclass(x)
 
 x <- table(rpois(100, 5))
+
+
+# Classes -----------------------------------------------------------------
+
+x <- structure(list(), class = "my_class")
+
+x <- list()
+class(x) <- "my_class"
