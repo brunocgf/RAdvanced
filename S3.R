@@ -61,3 +61,31 @@ new_difftime(c(1, 10, 3600), "secs")
 
 new_difftime(52, "weeks")
 
+
+# Generics and methods ----------------------------------------------------
+
+x <- Sys.Date()
+s3_dispatch(print(x))
+
+## Read the source code for t() and t.test() and confirm that t.test() is an S3 generic and not an S3 method.
+## What happens if you create an object with class test and call t() with it? Why?
+
+x <- structure(1:10, class = "test")
+t(x)
+
+s3_dispatch(t(x))
+s3_methods_generic("t")
+s3_methods_class("test")
+
+## What generics does the table class have methods for?
+
+s3_methods_class("table")
+
+## What generics does the ecdf class have methods for?
+
+s3_methods_class("ecdf")
+
+
+# Object styles -----------------------------------------------------------
+
+
