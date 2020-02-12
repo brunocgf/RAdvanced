@@ -86,6 +86,30 @@ s3_methods_class("table")
 s3_methods_class("ecdf")
 
 
-# Object styles -----------------------------------------------------------
+# Inheritance -------------------------------------------------------------
+
+new_secret <- function(x = double()) {
+  stopifnot(is.double(x))
+  structure(x, class = "secret")
+}
+
+print.secret <- function(x, ...) {
+  print(strrep("x", nchar(x)))
+  invisible(x)
+}
+
+x <- new_secret(c(15, 1, 456))
+x
+
+s3_dispatch(print(x))
+s3_dispatch(x[1])
+
+`[.secret` <- function(x, i) {
+  new_secret(NextMethod())
+}
+
+s3_dispatch(x[1])
+x[1]
+
 
 
