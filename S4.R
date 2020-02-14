@@ -22,3 +22,4 @@ x@year
 setOldClass("data.frame")
 setOldClass(c("ordered", "factor"))
 setOldClass(c("glm", "lm"))
+
